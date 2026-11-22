@@ -1,5 +1,6 @@
 {
   "block.calopsita_portal.dark_portal": "Dark Portal",
+  "item.calopsita_portal.dark_portal": "Dark Portal",
   "entity.calopsita_portal.zombie_calopsita": "Zombie Calopsita",
   "item.calopsita_portal.zombie_calopsita_spawn_egg": "Zombie Calopsita Spawn Egg"
 }

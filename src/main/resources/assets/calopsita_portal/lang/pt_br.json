@@ -1,5 +1,6 @@
 {
   "block.calopsita_portal.dark_portal": "Portal Sombrio",
+  "item.calopsita_portal.dark_portal": "Portal Sombrio",
   "entity.calopsita_portal.zombie_calopsita": "Calopsita Zumbi",
   "item.calopsita_portal.zombie_calopsita_spawn_egg": "Ovo Gerador de Calopsita Zumbi"
 }
