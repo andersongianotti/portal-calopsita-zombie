@@ -46,6 +46,7 @@ public class CalopsitaPortalMod implements ModInitializer {
 			BuiltInRegistries.BLOCK,
 			id("dark_portal"),
 			new DarkPortalBlock(BlockBehaviour.Properties.of()
+					.setId(ResourceKey.create(Registries.BLOCK, id("dark_portal")))
 					.mapColor(MapColor.COLOR_PURPLE)
 					.strength(3.0F)
 					.noCollision()
