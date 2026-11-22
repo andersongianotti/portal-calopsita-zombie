@@ -1,0 +1,17 @@
+{
+  "format_version": 2,
+  "header": {
+    "name": "Calopsita",
+    "description": "Adds the Calopsita, a tameable pet bird that follows its owner, perches on the shoulder and can be ordered to sit.",
+    "uuid": "3d63c43c-94ac-4bdb-a946-668eb98191ee",
+    "version": [1, 0, 0],
+    "min_engine_version": [1, 21, 0]
+  },
+  "modules": [
+    {
+      "type": "data",
+      "uuid": "3dec7fbd-ebc7-4640-bf0e-6fbacfd5e19a",
+      "version": [1, 0, 0]
+    }
+  ]
+}

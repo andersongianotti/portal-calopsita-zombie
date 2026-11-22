@@ -1,0 +1,7 @@
+{
+  "variants": {
+    "": [
+      { "model": "calopsita_portal:block/dark_portal" }
+    ]
+  }
+}

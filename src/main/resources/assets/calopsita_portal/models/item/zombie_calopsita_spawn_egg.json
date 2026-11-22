@@ -1,0 +1,6 @@
+{
+  "parent": "minecraft:item/generated",
+  "textures": {
+    "layer0": "calopsita_portal:item/zombie_calopsita_spawn_egg"
+  }
+}

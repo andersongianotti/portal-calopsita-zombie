@@ -1,0 +1,27 @@
+{
+	"schemaVersion": 1,
+	"id": "calopsita_portal",
+	"version": "${version}",
+	"name": "Calopsita Portal",
+	"description": "Adds a Dark Portal that teleports you to a shadowy dimension infested with hostile zombie Calopsitas.",
+	"authors": [
+		"ander"
+	],
+	"contact": {},
+	"license": "MIT",
+	"environment": "*",
+	"entrypoints": {
+		"main": [
+			"com.calopsitaportal.CalopsitaPortalMod"
+		],
+		"client": [
+			"com.calopsitaportal.client.CalopsitaPortalClient"
+		]
+	},
+	"depends": {
+		"fabricloader": ">=0.20.0",
+		"minecraft": "~26.3",
+		"java": ">=25",
+		"fabric-api": "*"
+	}
+}

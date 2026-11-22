@@ -1,0 +1,292 @@
+{
+  "format_version": "1.26.0",
+  "minecraft:entity": {
+    "description": {
+      "identifier": "calopsita:calopsita",
+      "is_summonable": true,
+      "is_spawnable": true,
+      "spawn_category": "creature"
+    },
+    "components": {
+      "minecraft:balloonable": {},
+      "minecraft:behavior.float": {
+        "priority": 1
+      },
+      "minecraft:behavior.panic": {
+        "priority": 1,
+        "speed_multiplier": 1.25
+      },
+      "minecraft:breathable": {
+        "suffocate_time": 0,
+        "total_supply": 15
+      },
+      "minecraft:can_fly": {},
+      "minecraft:collision_box": {
+        "height": 1,
+        "width": 0.5
+      },
+      "minecraft:conditional_bandwidth_optimization": {},
+      "minecraft:damage_sensor": {
+        "triggers": {
+          "cause": "fall",
+          "deals_damage": "no"
+        }
+      },
+      "minecraft:despawn": {
+        "despawn_from_distance": {}
+      },
+      "minecraft:game_event_movement_tracking": {
+        "emit_flap": true
+      },
+      "minecraft:healable": {
+        "filters": {
+          "operator": "!=",
+          "test": "is_riding",
+          "value": true
+        },
+        "force_use": true,
+        "items": [
+          {
+            "heal_amount": 4,
+            "item": "wheat_seeds"
+          }
+        ]
+      },
+      "minecraft:health": {
+        "max": 6,
+        "value": 6
+      },
+      "minecraft:hurt_on_condition": {
+        "damage_conditions": [
+          {
+            "cause": "lava",
+            "damage_per_tick": 4,
+            "filters": {
+              "operator": "==",
+              "test": "in_lava",
+              "subject": "self",
+              "value": true
+            }
+          }
+        ]
+      },
+      "minecraft:is_hidden_when_invisible": {},
+      "minecraft:jump.static": {},
+      "minecraft:leashable": {},
+      "minecraft:movement": {
+        "value": 0.4
+      },
+      "minecraft:movement.fly": {},
+      "minecraft:nameable": {},
+      "minecraft:navigation.fly": {
+        "can_path_from_air": true,
+        "can_path_over_water": true
+      },
+      "minecraft:physics": {},
+      "minecraft:pushable": {
+        "is_pushable": true,
+        "is_pushable_by_piston": true
+      }
+    },
+    "component_groups": {
+      "calopsita:adult": {
+        "minecraft:experience_reward": {
+          "on_death": "query.last_hit_by_player ? Math.Random(1,3) : 0"
+        },
+        "minecraft:leashable_to": {}
+      },
+      "calopsita:not_riding_player": {
+        "minecraft:behavior.look_at_player": {
+          "look_time": {
+            "min": 1,
+            "max": 2
+          },
+          "priority": 2
+        },
+        "minecraft:entity_sensor": {
+          "relative_range": false,
+          "subsensors": [
+            {
+              "event": "calopsita:on_riding_player",
+              "event_filters": {
+                "all_of": [
+                  {
+                    "test": "is_riding",
+                    "operator": "equals",
+                    "subject": "self",
+                    "value": true
+                  },
+                  {
+                    "test": "has_component",
+                    "operator": "equals",
+                    "subject": "self",
+                    "value": "minecraft:behavior.look_at_player"
+                  }
+                ]
+              },
+              "range": [
+                2.0,
+                2.0
+              ]
+            }
+          ]
+        }
+      },
+      "calopsita:riding_player": {
+        "minecraft:entity_sensor": {
+          "relative_range": false,
+          "subsensors": [
+            {
+              "event": "calopsita:on_not_riding_player",
+              "event_filters": {
+                "all_of": [
+                  {
+                    "test": "is_riding",
+                    "operator": "equals",
+                    "subject": "self",
+                    "value": false
+                  },
+                  {
+                    "test": "has_component",
+                    "operator": "not",
+                    "subject": "self",
+                    "value": "minecraft:behavior.look_at_player"
+                  }
+                ]
+              },
+              "range": [
+                2.0,
+                2.0
+              ]
+            }
+          ]
+        }
+      },
+      "calopsita:tame": {
+        "minecraft:behavior.find_mount": {
+          "avoid_water": true,
+          "mount_distance": 2.0,
+          "priority": 4,
+          "start_delay": 100,
+          "target_needed": false,
+          "within_radius": 16
+        },
+        "minecraft:behavior.follow_owner": {
+          "priority": 3,
+          "speed_multiplier": 1.0,
+          "start_distance": 5,
+          "stop_distance": 1
+        },
+        "minecraft:behavior.stay_while_sitting": {
+          "priority": 2
+        },
+        "minecraft:behavior.teleport_to_owner": {
+          "filters": {
+            "all_of": [
+              {
+                "test": "owner_distance",
+                "operator": ">",
+                "value": 12
+              },
+              {
+                "test": "is_panicking"
+              }
+            ]
+          },
+          "priority": 0
+        },
+        "minecraft:is_tamed": {},
+        "minecraft:sittable": {},
+        "minecraft:type_family": {
+          "family": [
+            "calopsita_tame",
+            "mob"
+          ]
+        }
+      },
+      "calopsita:wild": {
+        "minecraft:behavior.follow_mob": {
+          "priority": 4,
+          "search_range": 20,
+          "speed_multiplier": 1.0,
+          "stop_distance": 3
+        },
+        "minecraft:behavior.random_fly": {
+          "priority": 3,
+          "avoid_damage_blocks": true,
+          "can_land_on_trees": true,
+          "y_offset": 0,
+          "speed_multiplier": 1.0,
+          "xz_dist": 15,
+          "y_dist": 1
+        },
+        "minecraft:tameable": {
+          "probability": 1.0,
+          "tame_items": [
+            "wheat_seeds",
+            "melon_seeds",
+            "pumpkin_seeds",
+            "beetroot_seeds"
+          ],
+          "tame_event": {
+            "event": "calopsita:on_tame",
+            "target": "self"
+          }
+        },
+        "minecraft:type_family": {
+          "family": [
+            "calopsita_wild",
+            "mob"
+          ]
+        }
+      }
+    },
+    "events": {
+      "minecraft:entity_spawned": {
+        "add": {
+          "component_groups": [
+            "calopsita:adult",
+            "calopsita:wild",
+            "calopsita:not_riding_player"
+          ]
+        }
+      },
+      "calopsita:on_tame": {
+        "add": {
+          "component_groups": [
+            "calopsita:tame"
+          ]
+        },
+        "remove": {
+          "component_groups": [
+            "calopsita:wild"
+          ]
+        }
+      },
+      "calopsita:on_riding_player": {
+        "add": {
+          "component_groups": [
+            "calopsita:riding_player"
+          ]
+        },
+        "remove": {
+          "component_groups": [
+            "calopsita:not_riding_player"
+          ]
+        }
+      },
+      "calopsita:on_not_riding_player": {
+        "add": {
+          "component_groups": [
+            "calopsita:not_riding_player"
+          ]
+        },
+        "remove": {
+          "component_groups": [
+            "calopsita:riding_player"
+          ]
+        }
+      }
+    }
+  }
+}
