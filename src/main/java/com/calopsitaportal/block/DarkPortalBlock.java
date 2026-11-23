@@ -63,7 +63,8 @@ public class DarkPortalBlock extends Block {
 		double y;
 		double z;
 		if (goingToDark) {
-			int surfaceY = dest.getHeight(Heightmap.Types.MOTION_BLOCKING, 0, 0);
+			dest.getChunk(0, 0);
+			int surfaceY = dest.getHeight(Heightmap.Types.MOTION_BLOCKING_NO_LEAVES, 0, 0);
 			x = 0.5;
 			y = surfaceY + 1.0;
 			z = 0.5;
