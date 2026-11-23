@@ -34,7 +34,7 @@ public class DarkPortalBlock extends Block {
 	@Override
 	protected VoxelShape getEntityInsideCollisionShape(BlockState state, BlockGetter level,
 												  BlockPos pos, Entity entity) {
-		return Shapes.block();
+		return Shapes.box(0.0, 0.0, 0.0, 1.0, 1.5, 1.0);
 	}
 
 	@Override
