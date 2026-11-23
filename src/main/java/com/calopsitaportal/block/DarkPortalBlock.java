@@ -1,6 +1,8 @@
 package com.calopsitaportal.block;
 
 import com.calopsitaportal.CalopsitaPortalMod;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import net.minecraft.core.BlockPos;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.server.level.ServerLevel;
@@ -18,12 +20,12 @@ import net.minecraft.world.level.BlockGetter;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
-import java.util.UUID;
 
 public class DarkPortalBlock extends Block {
 
+	private static final Logger LOGGER = LoggerFactory.getLogger("calopsita_portal");
 	private static final long COOLDOWN_TICKS = 100;
-	private static final Map<UUID, Long> LAST_TELEPORT = new HashMap<>();
+	private static final Map<String, Long> LAST_TELEPORT = new HashMap<>();
 
 	public DarkPortalBlock(Properties properties) {
 		super(properties);
@@ -47,15 +49,18 @@ public class DarkPortalBlock extends Block {
 		}
 
 		long now = level.getGameTime();
-		Long last = LAST_TELEPORT.get(entity.getUUID());
+		String cooldownKey = level.dimension().identifier() + ":" + entity.getUUID();
+		Long last = LAST_TELEPORT.get(cooldownKey);
 		if (last != null && now - last < COOLDOWN_TICKS) {
 			return;
 		}
-		LAST_TELEPORT.put(entity.getUUID(), now);
+		LAST_TELEPORT.put(cooldownKey, now);
 
 		boolean goingToDark = level.dimension() != CalopsitaPortalMod.DARK_LEVEL;
+		LOGGER.info("[portal] entityInside: {} em {} -> dark={}", entity.getName().getString(), level.dimension().identifier(), goingToDark);
 		ServerLevel dest = server.getLevel(goingToDark ? CalopsitaPortalMod.DARK_LEVEL : Level.OVERWORLD);
 		if (dest == null) {
+			LOGGER.warn("[portal] destino nulo para {}", goingToDark ? CalopsitaPortalMod.DARK_LEVEL.identifier() : Level.OVERWORLD.identifier());
 			return;
 		}
 
@@ -80,9 +85,13 @@ public class DarkPortalBlock extends Block {
 
 		float yaw = entity.getYRot();
 		float pitch = entity.getXRot();
-		entity.teleportTo(dest, x, y, z, Set.of(), yaw, pitch, false);
-
-		placeReturnPortal(dest, x, z);
+		try {
+			entity.teleportTo(dest, x, y, z, Set.of(), yaw, pitch, false);
+			placeReturnPortal(dest, x, z);
+			LOGGER.info("[portal] teleport OK para {} em ({},{},{})", dest.dimension().identifier(), x, y, z);
+		} catch (Exception e) {
+			LOGGER.error("[portal] falha no teleporte", e);
+		}
 	}
 
 	private void placeReturnPortal(ServerLevel level, double x, double z) {
