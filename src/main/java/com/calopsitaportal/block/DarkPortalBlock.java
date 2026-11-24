@@ -49,7 +49,7 @@ public class DarkPortalBlock extends Block {
 		}
 
 		long now = level.getGameTime();
-		String cooldownKey = level.dimension().identifier() + ":" + entity.getUUID();
+		String cooldownKey = level + "|" + level.dimension().identifier() + "|" + entity.getUUID();
 		Long last = LAST_TELEPORT.get(cooldownKey);
 		if (last != null && now - last < COOLDOWN_TICKS) {
 			return;
